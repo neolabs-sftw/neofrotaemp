@@ -14,7 +14,7 @@ WORKDIR /app
 # Copia os arquivos de dependência primeiro (otimiza o cache do Docker)
 COPY package.json pnpm-lock.yaml* ./
 
-# Instala as dependências
+RUN pnpm config set policies.minimum-release-age 0
 RUN pnpm install --frozen-lockfile
 
 # Copia o restante dos arquivos do projeto
