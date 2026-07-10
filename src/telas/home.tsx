@@ -1,7 +1,7 @@
 import BaseTelas from "../componentes/baseTelas";
 import EditPerfil from "../componentes/editPerfil";
 import { useTema } from "../hooks/temaContext";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import BtnProximaViagem from "../componentes/btnProximaViagem";
 import ListaProximasViagens from "../componentes/listaProximasViagens";
 import { useVoucherPrev } from "../hooks/useVouchers";
@@ -87,17 +87,17 @@ function OperacaoConteudo() {
     return v.status == "Concluido";
   });
 
-  useEffect(() => {
-    const atualizarOperacao = () => {
-      refetchVouchers();
-    };
+  //   useEffect(() => {
+  //     const atualizarOperacao = () => {
+  //       refetchVouchers();
+  //     };
 
-    atualizarOperacao();
+  //     atualizarOperacao();
 
-    const intervalId = setInterval(atualizarOperacao, 300000);
+  //     const intervalId = setInterval(atualizarOperacao, 300000);
 
-    return () => clearInterval(intervalId);
-  }, []);
+  //     return () => clearInterval(intervalId);
+  //   }, []);
 
   const Cor = useTema().Cor;
 
