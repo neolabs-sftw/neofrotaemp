@@ -1,7 +1,7 @@
 # ==========================================
 # Estágio 1: Build da aplicação (Node.js)
 # ==========================================
-FROM node:20-alpine AS builder
+FROM node:22-alpine AS builder
 
 # Habilita o corepack para podermos usar a versão exata do pnpm do package.json
 ENV PNPM_HOME="/pnpm"
