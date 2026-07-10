@@ -3,18 +3,16 @@
 # ==========================================
 FROM node:22-alpine AS builder
 
-# Habilita o corepack para podermos usar a versão exata do pnpm do package.json
-ENV PNPM_HOME="/pnpm"
-ENV PATH="$PNPM_HOME:$PATH"
-RUN corepack enable
-
 # Define o diretório de trabalho dentro do container
 WORKDIR /app
+
+# Instala o pnpm v9 (mesma versão da sua máquina) usando o npm padrão
+RUN npm install -g pnpm@9
 
 # Copia os arquivos de dependência primeiro (otimiza o cache do Docker)
 COPY package.json pnpm-lock.yaml* ./
 
-RUN echo "policies.minimum-release-age=0" > .npmrc
+# Instala as dependências (agora sem a trava de idade!)
 RUN pnpm install --frozen-lockfile
 
 # Copia o restante dos arquivos do projeto
