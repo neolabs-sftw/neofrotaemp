@@ -6,7 +6,7 @@ import BtnProximaViagem from "../componentes/btnProximaViagem";
 import ListaProximasViagens from "../componentes/listaProximasViagens";
 import { useVoucherPrev } from "../hooks/useVouchers";
 import ModalPreviewVoucher from "../componentes/modalPreviewVoucher";
-import styled from "styled-components";
+// import styled from "styled-components";
 import CircularProgress from "@mui/material/CircularProgress";
 import { useSolicitante } from "../hooks/useSolicitante";
 
@@ -25,31 +25,31 @@ export function Home() {
   );
 }
 
-interface BtnProps {
-  $cor: string;
-}
+// interface BtnProps {
+//   $cor: string;
+// }
 
-const BtnAtualizarStyle = styled.button<BtnProps>`
-  padding: 6px 10px;
-  border-radius: 60px;
-  outline: none;
-  border: 1px solid ${({ $cor }) => $cor};
-  background-color: ${({ $cor }) => $cor + "BB"};
-  position: absolute;
-  bottom: 15px;
-  right: 15px;
-  backdrop-filter: blur(3px);
-  cursor: pointer;
-  transition: all ease-in-out 0.1s;
+// const BtnAtualizarStyle = styled.button<BtnProps>`
+//   padding: 6px 10px;
+//   border-radius: 60px;
+//   outline: none;
+//   border: 1px solid ${({ $cor }) => $cor};
+//   background-color: ${({ $cor }) => $cor + "BB"};
+//   position: absolute;
+//   bottom: 15px;
+//   right: 15px;
+//   backdrop-filter: blur(3px);
+//   cursor: pointer;
+//   transition: all ease-in-out 0.1s;
 
-  &:hover {
-    background-color: ${({ $cor }) => $cor + 90};
-    scale: 1.01;
-  }
-  &:active {
-    scale: 0.9;
-  }
-`;
+//   &:hover {
+//     background-color: ${({ $cor }) => $cor + 90};
+//     scale: 1.01;
+//   }
+//   &:active {
+//     scale: 0.9;
+//   }
+// `;
 
 function OperacaoConteudo() {
   //   const token = localStorage.getItem("token");
@@ -77,7 +77,7 @@ function OperacaoConteudo() {
 
   const {
     listaVoucherPrevData,
-    refetch: refetchVouchers,
+    // refetch: refetchVouchers,
     loading,
   } = useVoucherPrev(7, hoje);
 
@@ -118,7 +118,7 @@ function OperacaoConteudo() {
         visivel={modalPreveiw}
         v={voucherPreview}
       />
-      <BtnAtualizarStyle
+      {/* <BtnAtualizarStyle
         $cor={Cor.primaria}
         onClick={() => {
           refetchVouchers();
@@ -134,7 +134,7 @@ function OperacaoConteudo() {
         >
           refresh
         </p>
-      </BtnAtualizarStyle>
+      </BtnAtualizarStyle> */}
       <div
         style={{
           width: "100%",
