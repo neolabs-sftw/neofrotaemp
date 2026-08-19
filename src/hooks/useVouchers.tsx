@@ -213,8 +213,8 @@ export function useVouchers({
 }
 
 const GET_VOUCHERS_IDS = gql`
-  query VouchersIds($ids: [ID!]!) {
-    vouchersIds(ids: $ids) {
+  query VouchersIds($ids: [ID!]!, $operadoraId: ID!) {
+    vouchersIds(ids: $ids, operadoraId: $operadoraId) {
       id
       origem
       destino
@@ -284,7 +284,6 @@ const GET_VOUCHERS_IDS = gql`
         funcao
         fotoUrlSolicitante
       }
-
       operadora {
         id
       }
@@ -310,9 +309,9 @@ const GET_VOUCHERS_IDS = gql`
   }
 `;
 
-export function useVouchersIds(ids: any) {
+export function useVouchersIds(ids: any, operadoraId: any) {
   const { data, loading, error } = useQuery(GET_VOUCHERS_IDS, {
-    variables: { ids },
+    variables: { ids, operadoraId },
     fetchPolicy: "cache-and-network",
   });
 
@@ -322,6 +321,8 @@ export function useVouchersIds(ids: any) {
     loading,
   };
 }
+
+
 const GET_VOUCHERS_DATA = gql`
   query VoucherOperadoraData($operadoraId: ID!, $diaSelecionado: String!) {
     voucherOperadoraData(

@@ -167,7 +167,7 @@ function RelatorioConteudo() {
     refetch,
   } = useVouchersFiltrados(filtro);
 
-  const { listaVouchersIds } = useVouchersIds(idsParaBusca);
+  const { listaVouchersIds } = useVouchersIds(idsParaBusca, operadoraId);
 
   const listaRelatorio =
     listaVouchersIds && listaVouchersIds.length > 0
@@ -1026,16 +1026,7 @@ function TabelaVouchersFiltrados({
           <p style={{ whiteSpace: "nowrap" }}>
             {selecionados.length} - Vouchers Selecionados
           </p>
-          <BtnAcaoEmMassa
-            $cor={selecionados.length > 0 ? Cor.primaria : Cor.texto2}
-            $cursor={selecionados.length > 0 ? "pointer" : "auto"}
-            onClick={() => setVisivel(true)}
-            style={{
-              pointerEvents: selecionados.length === 0 ? "none" : "auto",
-            }}
-          >
-            Ação em Massa
-          </BtnAcaoEmMassa>
+         
           <ModalEditarMassa
             setVisivel={setVisivel}
             visivel={visivel}
@@ -1047,34 +1038,6 @@ function TabelaVouchersFiltrados({
     </div>
   );
 }
-
-interface BtnAcaoEmMassaProps {
-  $cor: string;
-  $cursor: string;
-}
-
-const BtnAcaoEmMassa = styled.div<BtnAcaoEmMassaProps>`
-  width: 150px;
-  background-color: ${({ $cor }) => $cor + 90};
-  padding: 5px;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: ease-in-out all 0.1s;
-  user-select: none;
-  cursor: ${({ $cursor }) => $cursor};
-
-  &:hover {
-    scale: 1.02;
-    background-color: ${({ $cor }) => $cor + "CC"};
-  }
-
-  &:active {
-    background-color: ${({ $cor }) => $cor};
-    scale: 0.98;
-  }
-`;
 
 const Overlay = styled.div<{ $visivel: boolean; $bg: string }>`
   width: 100vw;
@@ -2583,7 +2546,7 @@ function BaseFiltros({
     setFiltroAtivo(filtro);
   };
 
-  const buscarPorIds = () => {
+    const buscarPorIds = () => {
     const idsProcessados = numerosVouchers
       .split(",")
       .map((id) => id.trim())
