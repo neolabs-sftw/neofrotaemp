@@ -7,8 +7,8 @@ import { ApolloProvider } from "@apollo/client/react";
 import { TemaProvider } from "./hooks/temaContext.tsx";
 
 const httpLink = new HttpLink({
-  uri: 'http://localhost:4000/graphql',
-  // uri: "https://api.neofrota.com/graphql",
+  // uri: 'http://localhost:4000/graphql',
+  uri: "https://api.neofrota.com/graphql",
   credentials: "include",
 });
 
