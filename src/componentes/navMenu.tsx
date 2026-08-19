@@ -12,7 +12,7 @@ function NavMenu({ sidebar, logado }: { sidebar: boolean; logado: any }) {
     {
       tela: "Dashboard",
       icone: "dashboard",
-      path: "/home",
+      path: "/",
       submenu: false,
       itensSubMenu: [],
     },
@@ -23,257 +23,30 @@ function NavMenu({ sidebar, logado }: { sidebar: boolean; logado: any }) {
       submenu: false,
       itensSubMenu: [],
     },
-    {
-      tela: "Financeiro",
-      icone: "money_bag",
-      path: "/financeiro",
-      submenu: false,
-      itensSubMenu: [],
-    },
-    {
-      tela: "Relatórios",
-      icone: "list",
-      path: "/relatorios",
-      submenu: false,
-      itensSubMenu: [],
-    },
-    {
-      tela: "Configurações",
-      icone: "settings",
-      path: "/configuracoes",
-      submenu: false,
-      itensSubMenu: [],
-    },
-  ];
-  //   const listaTelasMaster = [
-  //     {
-  //       tela: "Dashboard",
-  //       icone: "dashboard",
-  //       path: "/",
-  //       submenu: false,
-  //       itensSubMenu: [],
-  //     },
-  //     {
-  //       tela: "Empresas",
-  //       icone: "bubble_chart",
-  //       path: "/empresas",
-  //       submenu: false,
-  //       itensSubMenu: [],
-  //     },
-  //     {
-  //       tela: "Agregados",
-  //       icone: "directions_car",
-  //       path: "/agregados",
-  //       submenu: false,
-  //       itensSubMenu: [],
-  //     },
-  //     {
-  //       tela: "Funcionários",
-  //       icone: "person",
-  //       path: "/funcionarios",
-  //       submenu: false,
-  //       itensSubMenu: [],
-  //     },
-  //     {
-  //       tela: "Operação",
-  //       icone: "mediation",
-  //       path: "/operacao",
-  //       submenu: true,
-  //       itensSubMenu: [
-  //         { tela: "Roteiros Fixos", icone: "mediation", path: "/modelosvouchersfixos" },
-  //         { tela: "Roteiros Turnos", icone: "mediation", path: "/modelosvouchersturnos" },
-  //         { tela: "Novo Voucher", icone: "mediation", path: "/novovoucher" },
-  //         { tela: "Rotas", icone: "mediation", path: "/Rotas" },
-  //       ],
-  //     },
-  //     {
-  //       tela: "Financeiro",
-  //       icone: "money_bag",
-  //       path: "/financeiro",
-  //       submenu: true,
-  //       itensSubMenu: [
-  //         { tela: "Recebimentos", icone: "money_bag", path: "/financeiro" },
-  //         { tela: "Pagamentos", icone: "money_bag", path: "/pagamentos" },
-  //         { tela: "Lancamentos", icone: "money_bag", path: "/lancamentos" },
-  //       ],
-  //     },
-  //     {
-  //       tela: "Relatórios",
-  //       icone: "list",
-  //       path: "/relatorios",
-  //       submenu: true,
-  //       itensSubMenu: [
-  //         { tela: "Geral", icone: "list", path: "/relatorios" },
-  //         { tela: "Fixos", icone: "list", path: "/relatorios" },
-  //         { tela: "Extras", icone: "list", path: "/relatorios" },
-  //       ],
-  //     },
-  //     {
-  //       tela: "Configurações",
-  //       icone: "settings",
-  //       path: "/configuracoes",
-  //       submenu: false,
-  //       itensSubMenu: [],
-  //     },
-  //   ];
-  const listaTelasAdmin = [
-    {
-      tela: "Dashboard",
-      icone: "dashboard",
-      path: "/",
-      submenu: false,
-      itensSubMenu: [],
-    },
-    {
-      tela: "Empresas",
-      icone: "bubble_chart",
-      path: "/empresas",
-      submenu: false,
-      itensSubMenu: [],
-    },
-    {
-      tela: "Agregados",
-      icone: "directions_car",
-      path: "/agregados",
-      submenu: false,
-      itensSubMenu: [],
-    },
-    {
-      tela: "Funcionários",
-      icone: "person",
-      path: "/funcionarios",
-      submenu: false,
-      itensSubMenu: [],
-    },
-    {
-      tela: "Operação",
-      icone: "mediation",
-      path: "/operacao",
-      submenu: true,
-      itensSubMenu: [
-        {
-          tela: "Roteiros Fixos",
-          icone: "mediation",
-          path: "/modelosvouchersfixos",
-        },
-        {
-          tela: "Roteiros Turnos",
-          icone: "mediation",
-          path: "/modelosvouchersturnos",
-        },
-        { tela: "Novo Voucher", icone: "mediation", path: "/novovoucher" },
-        { tela: "Rotas", icone: "mediation", path: "/operacao" },
-      ],
-    },
-    {
-      tela: "Financeiro",
-      icone: "money_bag",
-      path: "/financeiro",
-      submenu: true,
-      itensSubMenu: [
-        { tela: "Recebimentos", icone: "money_bag", path: "/financeiro" },
-        { tela: "Pagamentos", icone: "money_bag", path: "/pagamentos" },
-        { tela: "Lancamentos", icone: "money_bag", path: "/lancamentos" },
-      ],
-    },
+    // {
+    //   tela: "Financeiro",
+    //   icone: "money_bag",
+    //   path: "/financeiro",
+    //   submenu: false,
+    //   itensSubMenu: [],
+    // },
     {
       tela: "Relatórios",
       icone: "list",
       path: "/relatorios",
-      submenu: true,
-      itensSubMenu: [
-        { tela: "Geral", icone: "list", path: "/relatorios" },
-        { tela: "Fixos", icone: "list", path: "/relatorios" },
-        { tela: "Extras", icone: "list", path: "/relatorios" },
-      ],
-    },
-  ];
-  const listaTelasFinc = [
-    {
-      tela: "Dashboard",
-      icone: "dashboard",
-      path: "/",
       submenu: false,
       itensSubMenu: [],
     },
-    {
-      tela: "Financeiro",
-      icone: "money_bag",
-      path: "/financeiro",
-      submenu: true,
-      itensSubMenu: [
-        { tela: "Recebimentos", icone: "money_bag", path: "/financeiro" },
-        { tela: "Pagamentos", icone: "money_bag", path: "/financeiro" },
-      ],
-    },
-    {
-      tela: "Agregados",
-      icone: "directions_car",
-      path: "/agregados",
-      submenu: false,
-      itensSubMenu: [],
-    },
-    {
-      tela: "Relatórios",
-      icone: "list",
-      path: "/relatorios",
-      submenu: true,
-      itensSubMenu: [
-        { tela: "Geral", icone: "list", path: "/relatorios" },
-        { tela: "Fixos", icone: "list", path: "/relatorios" },
-        { tela: "Extras", icone: "list", path: "/relatorios" },
-      ],
-    },
-  ];
-  const listaTelasOper = [
-    {
-      tela: "Dashboard",
-      icone: "dashboard",
-      path: "/",
-      submenu: false,
-      itensSubMenu: [],
-    },
-    {
-      tela: "Operação",
-      icone: "mediation",
-      path: "/operacao",
-      submenu: true,
-      itensSubMenu: [
-        {
-          tela: "Roteiros Fixos",
-          icone: "mediation",
-          path: "/modelosvouchersfixos",
-        },
-        {
-          tela: "Roteiros Turnos",
-          icone: "mediation",
-          path: "/modelosvouchersturnos",
-        },
-        { tela: "Novo Voucher", icone: "mediation", path: "/novovoucher" },
-        { tela: "Rotas", icone: "mediation", path: "/operacao" },
-      ],
-    },
-    {
-      tela: "Relatórios",
-      icone: "list",
-      path: "/relatorios",
-      submenu: true,
-      itensSubMenu: [
-        { tela: "Geral", icone: "list", path: "/relatorios" },
-        { tela: "Fixos", icone: "list", path: "/relatorios" },
-        { tela: "Extras", icone: "list", path: "/relatorios" },
-      ],
-    },
+    // {
+    //   tela: "Configurações",
+    //   icone: "settings",
+    //   path: "/configuracoes",
+    //   submenu: false,
+    //   itensSubMenu: [],
+    // },
   ];
 
-  const listaTelas =
-    logado.funcao === "Master"
-      ? listaTelasMaster
-      : logado.funcao === "Admin"
-        ? listaTelasAdmin
-        : logado.funcao === "Finc"
-          ? listaTelasFinc
-          : listaTelasOper;
+  console.log(logado.id)
 
   const [submenuAberto, setSubmenuAberto] = useState<string | null>(null);
 
@@ -288,22 +61,24 @@ function NavMenu({ sidebar, logado }: { sidebar: boolean; logado: any }) {
             marginTop: 10,
           }}
         >
-          {listaTelas.map(({ tela, icone, path, submenu, itensSubMenu }) => (
-            <BtnMenu
-              key={path}
-              sidebar={sidebar}
-              Cor={Cor}
-              tela={tela}
-              icone={icone}
-              ativo={location.pathname === path}
-              path={path}
-              submenu={submenu}
-              itensSubMenu={itensSubMenu}
-              aberto={submenuAberto === tela}
-              abrirSubmenu={() => setSubmenuAberto(tela)}
-              fecharSubmenu={() => setSubmenuAberto(null)}
-            />
-          ))}
+          {listaTelasMaster.map(
+            ({ tela, icone, path, submenu, itensSubMenu }) => (
+              <BtnMenu
+                key={path}
+                sidebar={sidebar}
+                Cor={Cor}
+                tela={tela}
+                icone={icone}
+                ativo={location.pathname === path}
+                path={path}
+                submenu={submenu}
+                itensSubMenu={itensSubMenu}
+                aberto={submenuAberto === tela}
+                abrirSubmenu={() => setSubmenuAberto(tela)}
+                fecharSubmenu={() => setSubmenuAberto(null)}
+              />
+            ),
+          )}
         </ul>
       </div>
     </>

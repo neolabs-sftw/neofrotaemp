@@ -143,3 +143,106 @@ export function useFaturamentoDiario(
     error,
   };
 }
+
+const GET_FATURAMENTO_EMPRESACLIENTE = gql`
+  query FaturamentoEmpresaClienteId(
+    $inicio: DateTime!
+    $fim: DateTime!
+    $empresaClienteId: ID!
+    $status: String
+    $natureza: String
+  ) {
+    faturamentoEmpresaClienteId(
+      inicio: $inicio
+      fim: $fim
+      empresaClienteId: $empresaClienteId
+      status: $status
+      natureza: $natureza
+    ) {
+      empresaCliente
+      qntVouchers
+      totalFaturado
+    }
+  }
+`;
+
+interface fatu_cliente {
+  faturamentoEmpresaClienteId: {
+    empresaClienteId: String;
+    qntVouchers: String;
+    totalFaturado: String;
+  };
+}
+
+export function useFaturamentoClienteId(
+  inicio: string,
+  fim: string,
+  empresaClienteId: string,
+  status: string,
+  natureza: string,
+) {
+  const { data, loading, error } = useQuery<fatu_cliente>(
+    GET_FATURAMENTO_EMPRESACLIENTE,
+    {
+      variables: {
+        inicio,
+        fim,
+        empresaClienteId,
+        status,
+        natureza,
+      },
+    },
+  );
+
+  return {
+    data: data?.faturamentoEmpresaClienteId,
+    loading,
+    error,
+  };
+}
+
+
+const GET_FATURAMENTO_TOTAL_EMPRESACLIENTE = gql`
+  query FaturamentoEmpresaClienteId(
+    $inicio: DateTime!
+    $fim: DateTime!
+    $empresaClienteId: ID!
+    $status: String
+  ) {
+    faturamentoEmpresaClienteId(
+      inicio: $inicio
+      fim: $fim
+      empresaClienteId: $empresaClienteId
+      status: $status
+    ) {
+      empresaCliente
+      qntVouchers
+      totalFaturado
+    }
+  }
+`;
+
+export function useFaturamentoTotalClienteId(
+  inicio: string,
+  fim: string,
+  empresaClienteId: string,
+  status: string,
+) {
+  const { data, loading, error } = useQuery<fatu_cliente>(
+    GET_FATURAMENTO_TOTAL_EMPRESACLIENTE,
+    {
+      variables: {
+        inicio,
+        fim,
+        empresaClienteId,
+        status,
+      },
+    },
+  );
+
+  return {
+    data: data?.faturamentoEmpresaClienteId,
+    loading,
+    error,
+  };
+}

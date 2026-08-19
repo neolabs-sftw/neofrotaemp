@@ -74,3 +74,58 @@ export function useEditarSolicitante(solicitantesEmpresaClienteId: any) {
     error,
   };
 }
+
+const LOGIN_SOLICITANTE = gql`
+  mutation LoginSolicitante($email: String!, $senha: String!) {
+    loginSolicitante(email: $email, senha: $senha) {
+      token
+      solicitante {
+        funcao
+        id
+        nome
+        statusSolicitante
+        empresaClienteId {
+          nome
+          id
+          fotoLogoCliente
+        }
+        fotoUrlSolicitante
+      }
+    }
+  }
+`;
+
+export function useLoginSolicitante() {
+  const [login, { data, loading, error }] = useMutation(LOGIN_SOLICITANTE);
+
+  const loginSolicitante = async (email: string, senha: string) => {
+    if (!email || !senha) {
+      console.error("Email e senha são obrigatórios!");
+      return;
+    }
+
+    try {
+      const res = await login({
+        variables: { email, senha },
+      });
+
+      const token = res.data?.loginSolicitante?.token;
+
+      if (token) {
+        localStorage.setItem("token", token);
+      }
+
+      return res.data;
+    } catch (err) {
+      console.error("Erro ao fazer login:", err);
+      throw err;
+    }
+  };
+
+  return {
+    loginSolicitante,
+    data,
+    loading,
+    error,
+  };
+}

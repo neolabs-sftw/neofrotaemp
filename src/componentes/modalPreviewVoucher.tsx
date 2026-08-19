@@ -1,7 +1,5 @@
-import { useEffect } from "react";
 import { useTema } from "../hooks/temaContext";
 import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
 import assPadrao from "../assets/image/not_sing.png";
 import { useVoucherExtraId, useVoucherFixoId } from "../hooks/useVouchers";
 import CircularProgress from "@mui/material/CircularProgress";
@@ -61,7 +59,6 @@ function ModalPreviewVoucher({
   v: any;
 }) {
   const Cor = useTema().Cor;
-  const navigate = useNavigate();
 
   const { voucherExtraId, loading: loadingExtra } = useVoucherExtraId(
     v?.natureza === "Extra" ? v?.id : null,
@@ -74,19 +71,6 @@ function ModalPreviewVoucher({
   const voucher = v?.natureza === "Extra" ? voucherExtraId : voucherFixoId;
   const loading = loadingExtra || loadingFixo;
 
-  // 3. Atalhos de teclado
-  useEffect(() => {
-    const handleKeyDown = (event: any) => {
-      if (event.key === "Escape") setVisivel(false);
-      if (event.key === "Enter" && v) {
-        navigate(`/editarVoucher/${v.natureza}/${btoa(v.id)}`);
-      }
-    };
-    if (visivel) document.addEventListener("keydown", handleKeyDown);
-    return () => document.removeEventListener("keydown", handleKeyDown);
-  }, [visivel, v, navigate, setVisivel]);
-
-  // Se não estiver visível, não renderiza nada
   if (!visivel) return null;
 
   return (
@@ -156,7 +140,7 @@ function ModalPreviewVoucher({
                         : Cor.textoExtra,
                   }}
                 >
-                  ID: <strong>{btoa(voucher.id)}</strong>
+                  ID: <strong>{voucher.id}</strong>
                 </p>
                 <p
                   style={{

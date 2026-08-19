@@ -1,55 +1,22 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { gql, useQuery } from "@apollo/client";
-import { BoasVindas } from "./telas/boasVindas";
 import { Home } from "./telas/home";
 import Relatorios from "./telas/relatorios";
-
-const GET_USUARIO = gql`
-  query Query($adminUsuarioId: ID!) {
-    adminUsuario(id: $adminUsuarioId) {
-      id
-      nome
-      email
-      senha
-      fotoAdminOperadora
-      funcao
-      statusAdminOperadora
-      dataCriacao
-      operadora {
-        id
-        nome
-        slug
-        logoOperadora
-        cnpj
-        rSocial
-        endRua
-        endNumero
-        endBairro
-        endCep
-        endCidade
-        endUf
-        statusOperadora
-        dataCriacao
-      }
-    }
-  }
-`;
+import Login from "./telas/login";
+import PrivateRoute from "./hooks/rotasPrivadas";
+import Passageiros from "./telas/funcionarios";
 
 function App() {
-  const { data } = useQuery(GET_USUARIO, {
-    variables: { adminUsuarioId: 1 },
-  });
-
-  console.log(data);
-
   return (
     <>
       <div>
         <BrowserRouter>
           <Routes>
-            <Route path="/" element={<BoasVindas />} />
-            <Route path="/home" element={<Home />} />
-            <Route path="/relatorios" element={<Relatorios />} />
+            <Route path="/login" element={<Login />} />
+            <Route element={<PrivateRoute />}>
+              <Route path="/" element={<Home />} />
+              <Route path="/relatorios" element={<Relatorios />} />
+              <Route path="/funcionarios" element={<Passageiros />} />
+            </Route>
           </Routes>
         </BrowserRouter>
       </div>

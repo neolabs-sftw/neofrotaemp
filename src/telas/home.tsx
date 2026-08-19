@@ -6,13 +6,14 @@ import BtnProximaViagem from "../componentes/btnProximaViagem";
 import ListaProximasViagens from "../componentes/listaProximasViagens";
 import { useVoucherPrev } from "../hooks/useVouchers";
 import ModalPreviewVoucher from "../componentes/modalPreviewVoucher";
-// import styled from "styled-components";
 import CircularProgress from "@mui/material/CircularProgress";
-import { useSolicitante } from "../hooks/useSolicitante";
+import { useSolicitanteLogado } from "../hooks/solicitanteLogado";
+import CardInfosMenorExtras from "../componentes/cardInfosMenorExtras";
+import CardInfosMenorFixos from "../componentes/cardInfosMenorFIxos";
+import CardInfosMenorTurnos from "../componentes/cardInfosMenorTurnos";
+import CardInfosMenorTotal from "../componentes/cardInfosMenorTotal";
 
 export function Home() {
-  const { solicitantes } = useSolicitante(1);
-  console.log(solicitantes);
   return (
     <BaseTelas
       conteudo={
@@ -25,42 +26,8 @@ export function Home() {
   );
 }
 
-// interface BtnProps {
-//   $cor: string;
-// }
-
-// const BtnAtualizarStyle = styled.button<BtnProps>`
-//   padding: 6px 10px;
-//   border-radius: 60px;
-//   outline: none;
-//   border: 1px solid ${({ $cor }) => $cor};
-//   background-color: ${({ $cor }) => $cor + "BB"};
-//   position: absolute;
-//   bottom: 15px;
-//   right: 15px;
-//   backdrop-filter: blur(3px);
-//   cursor: pointer;
-//   transition: all ease-in-out 0.1s;
-
-//   &:hover {
-//     background-color: ${({ $cor }) => $cor + 90};
-//     scale: 1.01;
-//   }
-//   &:active {
-//     scale: 0.9;
-//   }
-// `;
-
 function OperacaoConteudo() {
-  //   const token = localStorage.getItem("token");
-
-  //   interface JwtPayload {
-  //     adminUsuarioId?: string;
-  //     operadoraId?: string;
-  //   }
-
-  //   const decoded = token ? jwtDecode<JwtPayload>(token) : null;
-  //   const operadoraId = decoded?.operadoraId || "";
+  const solicitante = useSolicitanteLogado();
 
   const [modalPreveiw, setModalPreview] = useState(false);
   const [voucherPreview, setVoucherPreview] = useState<any>(null);
@@ -75,29 +42,17 @@ function OperacaoConteudo() {
 
   const hoje = formatarData(new Date());
 
-  const {
-    listaVoucherPrevData,
-    // refetch: refetchVouchers,
-    loading,
-  } = useVoucherPrev(7, hoje);
+  const { listaVoucherPrevData, loading } = useVoucherPrev(
+    solicitante?.operadoraId.id,
+    hoje,
+  );
 
-  console.log(listaVoucherPrevData);
-
-  const listaVoucherDataFiltro = listaVoucherPrevData.filter((v: any) => {
-    return v.status == "Concluido";
+  const listaProximosVouchers = listaVoucherPrevData.filter((v: any) => {
+    return v.empresaCliente.id === solicitante?.empresaClienteId.id;
   });
-
-  //   useEffect(() => {
-  //     const atualizarOperacao = () => {
-  //       refetchVouchers();
-  //     };
-
-  //     atualizarOperacao();
-
-  //     const intervalId = setInterval(atualizarOperacao, 300000);
-
-  //     return () => clearInterval(intervalId);
-  //   }, []);
+  const listaVoucherDataFiltro = listaProximosVouchers.filter((v: any) => {
+    return v.status == "Aberto";
+  });
 
   const Cor = useTema().Cor;
 
@@ -118,23 +73,7 @@ function OperacaoConteudo() {
         visivel={modalPreveiw}
         v={voucherPreview}
       />
-      {/* <BtnAtualizarStyle
-        $cor={Cor.primaria}
-        onClick={() => {
-          refetchVouchers();
-        }}
-      >
-        <p
-          style={{
-            fontFamily: "Icone",
-            fontWeight: "bold",
-            fontSize: 40,
-            color: Cor.primariaTxt,
-          }}
-        >
-          refresh
-        </p>
-      </BtnAtualizarStyle> */}
+
       <div
         style={{
           width: "100%",
@@ -153,6 +92,31 @@ function OperacaoConteudo() {
             backgroundColor: Cor.primaria,
           }}
         />
+      </div>
+      <div
+        style={{
+          width: "100%",
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+          gap: 10,
+          padding: 10,
+        }}
+      >
+        <CardInfosMenorExtras />
+        <CardInfosMenorFixos />
+        <CardInfosMenorTurnos />
+        <CardInfosMenorTotal />
+      </div>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          gap: 10,
+          // height: 100,
+        }}
+      >
+        <p style={{ color: Cor.texto1 }}>Próximas Corridas</p>
       </div>
       <div
         style={{
@@ -189,90 +153,6 @@ function OperacaoConteudo() {
             />
           ))}
         </div>
-        {/* <div
-          style={{
-            width: "20%",
-            height: "100%",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "space-around",
-            gap: 5,
-          }}
-        >
-          <BtnNovoVoucher
-            $cor={Cor.primaria}
-            onClick={() => {
-              navigate("/modelosvouchersfixos");
-            }}
-          >
-            <p
-              style={{
-                fontFamily: "Icone",
-                fontWeight: "bold",
-                fontSize: 40,
-                color: Cor.primaria,
-              }}
-            >
-              history
-            </p>
-            <p
-              style={{
-                textAlign: "center",
-                fontSize: 16,
-                color: Cor.secundaria,
-              }}
-            >
-              Roteiros Fixos
-            </p>
-          </BtnNovoVoucher>
-          <BtnNovoVoucher $cor={Cor.primaria}>
-            <p
-              style={{
-                fontFamily: "Icone",
-                fontWeight: "bold",
-                fontSize: 40,
-                color: Cor.primaria,
-              }}
-            >
-              cycle
-            </p>
-            <p
-              style={{
-                textAlign: "center",
-                fontSize: 16,
-                color: Cor.secundaria,
-              }}
-            >
-              Roteiros Turno
-            </p>
-          </BtnNovoVoucher>
-          <BtnNovoVoucher
-            $cor={Cor.primaria}
-            onClick={() => {
-              navigate("/novovoucher");
-            }}
-          >
-            <p
-              style={{
-                fontFamily: "Icone",
-                fontWeight: "bold",
-                fontSize: 40,
-                color: Cor.primaria,
-              }}
-            >
-              car_tag
-            </p>
-            <p
-              style={{
-                textAlign: "center",
-                fontSize: 16,
-                color: Cor.secundaria,
-              }}
-            >
-              Novo Voucher
-            </p>
-          </BtnNovoVoucher>
-        </div> */}
       </div>
       <div
         style={{
@@ -291,10 +171,10 @@ function OperacaoConteudo() {
             display: "flex",
             flexDirection: "row",
             gap: 10,
-            height: 100,
+            // height: 100,
           }}
         >
-          <p>Próximos Vouchers</p>
+          <p style={{ color: Cor.texto1 }}>Programação do Dia</p>
         </div>
         {loading ? (
           <CircularProgress
@@ -303,15 +183,17 @@ function OperacaoConteudo() {
             sx={{ color: Cor.primaria }}
           />
         ) : (
-          listaVoucherPrevData.map((v: any) => (
-            <ListaProximasViagens
-              v={v}
-              key={v.id}
-              modalPreveiw={modalPreveiw}
-              setModalPreview={setModalPreview}
-              setVoucherPreview={setVoucherPreview}
-            />
-          ))
+          listaVoucherDataFiltro
+            .slice(15)
+            .map((v: any) => (
+              <ListaProximasViagens
+                v={v}
+                key={v.id}
+                modalPreveiw={modalPreveiw}
+                setModalPreview={setModalPreview}
+                setVoucherPreview={setVoucherPreview}
+              />
+            ))
         )}
       </div>
     </div>

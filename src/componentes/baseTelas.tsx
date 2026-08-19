@@ -1,40 +1,39 @@
 import { useState, useEffect } from "react";
 import { useTema } from "../hooks/temaContext";
 import NavMenu from "./navMenu";
-import AdminLogadoProvider from "../hooks/AdminLogado";
+import SolicitanteLogadoProvider from "../hooks/solicitanteLogado";
 import { gql, useQuery } from "@apollo/client";
 import Lottie from "lottie-react";
 import loadingAnimation from "../assets/animations/novologo.json";
 import iconLogo from "../assets/image/icon.png";
+import { jwtDecode } from "jwt-decode";
 // import { jwtDecode } from "jwt-decode";
 
-const GET_USUARIO = gql`
-  query Query($adminUsuarioId: ID!) {
-    adminUsuario(id: $adminUsuarioId) {
+const GET_SOLICITANTE = gql`
+  query SolicitanteId($solicitanteId: ID!) {
+    solicitanteId(id: $solicitanteId) {
       id
       nome
       email
       senha
-      fotoAdminOperadora
       funcao
-      statusAdminOperadora
-      dataCriacao
-      operadora {
-        id
-        nome
-        slug
+      telefone
+      operadoraId {
         logoOperadora
-        cnpj
+        id
         rSocial
-        endRua
-        endNumero
-        endBairro
-        endCep
-        endCidade
-        endUf
-        statusOperadora
-        dataCriacao
+        cnpj
+        nome
       }
+      statusSolicitante
+      empresaClienteId {
+        id
+        fotoLogoCliente
+        nome
+        rSocial
+        cnpj
+      }
+      fotoUrlSolicitante
     }
   }
 `;
@@ -50,16 +49,18 @@ function BaseTelas({ conteudo }: { conteudo: any }) {
     localStorage.setItem("menuAberto", String(aberto));
   }, [aberto]);
 
-  //   interface JwtPayload {
-  //     adminUsuarioId?: string;
-  //     operadoraId?: string;
-  //   }
+  interface JwtPayload {
+    solicitanteId?: string;
+    operadoraId?: string;
+    empresaClienteId?: string;
+  }
 
-  //   const token = localStorage.getItem("token");
-  //   const decoded = token ? jwtDecode<JwtPayload>(token) : null;
-  //   const adminUsuarioId = decoded ? decoded.adminUsuarioId : null;
-  const { loading, error, data } = useQuery(GET_USUARIO, {
-    variables: { adminUsuarioId: 1 },
+  const token = localStorage.getItem("token");
+  const decoded = token ? jwtDecode<JwtPayload>(token) : null;
+  const solicitanteId = decoded ? decoded.solicitanteId : null;
+
+  const { loading, error, data } = useQuery(GET_SOLICITANTE, {
+    variables: { solicitanteId },
   });
 
   if (loading)
@@ -119,11 +120,11 @@ function BaseTelas({ conteudo }: { conteudo: any }) {
       </>
     );
 
-  const logado = data.adminUsuario;
+  const logado = data.solicitanteId;
 
   return (
     <>
-      <AdminLogadoProvider value={logado}>
+      <SolicitanteLogadoProvider value={logado}>
         <div
           style={{
             backgroundColor: Cor.base,
@@ -151,31 +152,129 @@ function BaseTelas({ conteudo }: { conteudo: any }) {
             <div
               style={{
                 backgroundColor: Cor.base,
-                height: "10vh",
+                height: aberto === false ? "10vh" : "20vh",
                 borderBottom: "1px solid" + Cor.texto1 + 30,
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "flex-start",
-                paddingLeft: "10px",
+                paddingLeft: aberto === false ? "5px" : "0px",
                 gap: "15px",
                 transition: "width 0.3s ease-in-out",
               }}
             >
-              <img
-                src={logado.operadora?.logoOperadora || iconLogo}
-                alt="Logo"
-                style={{
-                  width: "45px",
-                  height: "45px",
-                  objectFit: "cover",
-                  borderRadius: "10px",
-                  transition: "width 0.3s ease-in-out",
-                  border: "2px solid" + Cor.base2,
-                  boxShadow: "1px 0px 5px rgba(0, 0, 0, 0.1)",
-                }}
-              />
+              {!aberto ? (
+                <img
+                  src={logado.empresaClienteId?.fotoLogoCliente || iconLogo}
+                  alt="Logo"
+                  style={{
+                    width: "45px",
+                    height: "45px",
+                    objectFit: "cover",
+                    borderRadius: "10px",
+                    transition: "width 0.3s ease-in-out",
+                    border: "2px solid" + Cor.base2,
+                    boxShadow: "1px 0px 5px rgba(0, 0, 0, 0.1)",
+                  }}
+                />
+              ) : null}
+
               {aberto ? (
-                <div style={{ flexDirection: "column", display: "flex" }}>
+                <div
+                  style={{
+                    flexDirection: "column",
+                    display: "flex",
+                    width: "100%",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    gap: 10,
+                  }}
+                >
+                  <div
+                    style={{
+                      flexDirection: "row",
+                      display: "flex",
+                      width: "100%",
+                      justifyContent: "center",
+                      alignItems: "center",
+                    }}
+                  >
+                    <img
+                      src={logado.empresaClienteId?.fotoLogoCliente || iconLogo}
+                      alt="Logo"
+                      style={{
+                        width: "70px",
+                        height: "70px",
+                        objectFit: "cover",
+                        borderRadius: "10px",
+                        transition: "width 0.3s ease-in-out",
+                        border: "2px solid" + Cor.base2,
+                        boxShadow: "1px 0px 5px rgba(0, 0, 0, 0.1)",
+                      }}
+                    />
+                    <div
+                      style={{
+                        position: "relative",
+                        width: "36px",
+                        height: "36px",
+                        display: "flex",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        margin: "0 -15px",
+                        zIndex: 10,
+                        transform: "skewX(-10deg)",
+                        filter: "drop-shadow(3px 3px 3px rgba(0, 0, 0, 0.4))",
+                      }}
+                    >
+                      {/* Barra Horizontal */}
+                      <div
+                        style={{
+                          position: "absolute",
+                          width: "30px",
+                          height: "14px",
+                          backgroundColor: Cor.primaria,
+                          border: "2px solid white",
+                          borderRadius: "4px",
+                          boxSizing: "border-box",
+                        }}
+                      />
+
+                      {/* Barra Vertical */}
+                      <div
+                        style={{
+                          position: "absolute",
+                          width: "14px",
+                          height: "30px",
+                          backgroundColor: Cor.primaria,
+                          border: "2px solid white",
+                          borderRadius: "4px",
+                          boxSizing: "border-box",
+                        }}
+                      />
+                      <div
+                        style={{
+                          position: "absolute",
+                          width: "14px",
+                          height: "10px",
+                          backgroundColor: Cor.primaria,
+                          zIndex: 2,
+                        }}
+                      />
+                    </div>
+                    {/* Fim do "+" */}
+                    <img
+                      src={logado.operadoraId?.logoOperadora || iconLogo}
+                      alt="Logo"
+                      style={{
+                        width: "70px",
+                        height: "70px",
+                        objectFit: "cover",
+                        borderRadius: "10px",
+                        transition: "width 0.3s ease-in-out",
+                        border: "2px solid" + Cor.base2,
+                        boxShadow: "1px 0px 5px rgba(0, 0, 0, 0.1)",
+                      }}
+                    />
+                  </div>
                   <p
                     style={{
                       color: Cor.primaria,
@@ -183,7 +282,7 @@ function BaseTelas({ conteudo }: { conteudo: any }) {
                       fontWeight: "bold",
                     }}
                   >
-                    {logado.operadora.nome}
+                    {logado.operadoraId?.nome}
                   </p>
                 </div>
               ) : null}
@@ -248,7 +347,7 @@ function BaseTelas({ conteudo }: { conteudo: any }) {
             {conteudo}
           </main>
         </div>
-      </AdminLogadoProvider>
+      </SolicitanteLogadoProvider>
     </>
   );
 }

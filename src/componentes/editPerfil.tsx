@@ -1,17 +1,14 @@
 import { useState } from "react";
 import { useTema } from "../hooks/temaContext";
 import { useNavigate } from "react-router-dom";
-import { useAdminLogado } from "../hooks/AdminLogado";
+import { useSolicitanteLogado } from "../hooks/solicitanteLogado";
 
 function EditPerfil() {
-  const adminLogado = useAdminLogado();
+  const solicitante = useSolicitanteLogado();
   const { Cor, tema, alternarTema } = useTema();
   const [aberto, setAberto] = useState<boolean>(false);
   const Navigator = useNavigate();
 
-  //   useEffect(() => {
-  //     document.title = `NeoFrota | ${adminLogado?.operadora.nome}`;
-  //   }, [adminLogado]);
   return (
     <>
       <div
@@ -56,9 +53,15 @@ function EditPerfil() {
             }}
           >
             <img
+              // src={
+              //   adminLogado?.fotoAdminOperadora ||
+              //   "https://iyqleanlhzcnndzuugkg.supabase.co/storage/v1/object/public/neofrotabkt/img_perfis/default.png"
+              // }
               src={
-                adminLogado?.fotoAdminOperadora ||
-                "https://iyqleanlhzcnndzuugkg.supabase.co/storage/v1/object/public/neofrotabkt/img_perfis/default.png"
+                solicitante?.fotoUrlSolicitante === null ||
+                solicitante?.fotoUrlSolicitante === undefined
+                  ? "https://cdn.neofrota.com/storage/v1/object/public/neofrotabkt/foto_perfil_motorista/default.png"
+                  : solicitante?.fotoUrlSolicitante
               }
               alt="Logo"
               style={{
@@ -76,7 +79,7 @@ function EditPerfil() {
                 fontWeight: "bold",
               }}
             >
-              {adminLogado?.nome || "Carregando..."}
+              {solicitante?.nome || "Carregando..."}
             </p>
           </div>
           <p
